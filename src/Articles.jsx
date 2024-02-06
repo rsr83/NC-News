@@ -4,7 +4,7 @@ import fetchArticles from "./Utils/fetchArticles";
 
 export default function Articles() {
   const [articlesList, setArticlesList] = useState([]);
-  const [isLoading, setIsLoading] = useState([true]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
