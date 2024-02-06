@@ -1,24 +1,28 @@
 import { useState, useEffect } from "react";
 import ArticleCard from "./ArticleCard";
+import fetchArticles from "./Utils/fetchArticles";
 
 export default function Articles() {
   const [articlesList, setArticlesList] = useState([]);
+  const [isLoading, setIsLoading] = useState([true]);
 
   useEffect(() => {
-    fetch("https://rafaels-nc-news.onrender.com/api/articles")
-      .then((response) => {
-        return response.json();
-      })
-      .then(({ articles }) => {
-        setArticlesList(articles);
-      });
+    setIsLoading(true);
+    fetchArticles().then(({ articles }) => {
+      setArticlesList(articles);
+      setIsLoading(false);
+    });
   }, []);
 
   return (
     <>
-      {articlesList.map((article) => {
-        return <ArticleCard key={article.article_id} article={article} />;
-      })}
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        articlesList.map((article) => {
+          return <ArticleCard key={article.article_id} article={article} />;
+        })
+      )}
     </>
   );
 }
