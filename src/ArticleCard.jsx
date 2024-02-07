@@ -10,7 +10,6 @@ export default function ArticleCard({ article }) {
           <img src={article_img_url}></img>
           <h2>{title}</h2>
         </Link>
-        ;
       </div>
     </>
   );
