@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CommentCard from "./CommentCard";
 import fetchCommentsByArticleID from "./Utils/fetchCommentsByArticleID";
 import ArticleVote from "./ArticleVote";
+import CommentAdder from "./CommentAdder";
 
 export default function SingleArticleCard({ singleArticle }) {
   const {
@@ -33,14 +34,11 @@ export default function SingleArticleCard({ singleArticle }) {
       <div className="article-card">
         <img src={article_img_url}></img>
         <h2>{title}</h2>
-        <h4>{body}</h4>
-        <h6>
-          author: {author} <br />
-          topic: {topic} <br />
-          created at: <br />
-          {created_at.slice(0, 10)} <br />
-          votes: {votesActual}
-        </h6>
+        <h4>author: {author}</h4>
+        <p>{body}</p>
+        <p>topic: {topic}</p>
+        <p>created at: {created_at.slice(0, 10)}</p>
+        <p>likes: {votesActual}</p>
         <ArticleVote
           key={article_id}
           article_id={article_id}
@@ -49,7 +47,10 @@ export default function SingleArticleCard({ singleArticle }) {
         />
       </div>
       <div>
-        <h3>comments:</h3>
+        <CommentAdder article_id={article_id} />
+      </div>
+      <div>
+        <h4>comments:</h4>
         {isLoading ? (
           <p>Loading...</p>
         ) : (
