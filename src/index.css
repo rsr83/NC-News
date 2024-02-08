@@ -15,8 +15,14 @@ img {
   text-align: center;
   margin: 20px;
   border: 1px solid rgb(7, 7, 7);
-  border-radius: 10px;
   background-color: rgb(228, 223, 215);
+}
+
+.topics {
+  text-align: center;
+  margin: 20px;
+  border: 1px solid rgb(7, 7, 7);
+  background-color: rgb(236, 215, 235);
 }
 
 .add-comment {
