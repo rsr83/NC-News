@@ -3,10 +3,9 @@ export default function CommentCard({ comment }) {
 
   return (
     <div className="comment-card">
-      <h5>
-        {body} <br /> comment by: {author} <br />
-        created at: {created_at.slice(0, 10)}
-      </h5>
+      <p>{body}</p>
+      <p>comment by: {author}</p>
+      <p>created at: {created_at.slice(0, 10)}</p>
     </div>
   );
 }
