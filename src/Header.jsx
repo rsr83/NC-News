@@ -6,6 +6,7 @@ export default function Header() {
       <Link to={`/`}>
         <h3>Home</h3>
       </Link>
+      <p>current user: grumpy19</p>
     </>
   );
 }

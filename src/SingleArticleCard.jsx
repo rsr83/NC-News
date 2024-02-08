@@ -56,7 +56,14 @@ export default function SingleArticleCard({ singleArticle }) {
         ) : (
           commentsList.map((comment) => {
             countComments++;
-            return <CommentCard key={comment.comment_id} comment={comment} />;
+            return (
+              <CommentCard
+                key={comment.comment_id}
+                comment={comment}
+                commentsList={commentsList}
+                setCommentsList={setCommentsList}
+              />
+            );
           })
         )}
       </div>

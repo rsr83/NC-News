@@ -60,6 +60,17 @@ export default function CommentAdder({ article_id }) {
       </>
     );
   } else {
-    return <h4>thanks for your comment</h4>;
+    return (
+      <div className="add-comment">
+        <h4>thanks for your comment</h4>
+        <button
+          onClick={() => {
+            setNewComment(false);
+          }}
+        >
+          add another comment
+        </button>
+      </div>
+    );
   }
 }
