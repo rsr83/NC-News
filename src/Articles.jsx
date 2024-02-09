@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import ArticleCard from "./ArticleCard";
 import fetchArticles from "./Utils/fetchArticles";
 import fetchTopics from "./Utils/fetchTopics";
-import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
+import ErrorPage from "./ErrorPage";
 
 export default function Articles() {
   const [articlesList, setArticlesList] = useState([]);
   const [topicsList, setTopicsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [error, setError] = useState(null);
   const sortOptions = ["created_at", "comment_count", "votes"];
   const orderOptions = ["ASC", "DESC"];
 
@@ -19,10 +20,14 @@ export default function Articles() {
       searchParams.get("topic"),
       searchParams.get("sort_by"),
       searchParams.get("order")
-    ).then(({ articles }) => {
-      setArticlesList(articles);
-      setIsLoading(false);
-    });
+    )
+      .then(({ articles }) => {
+        setArticlesList(articles);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError({ err });
+      });
   }, [searchParams]);
 
   useEffect(() => {
@@ -31,10 +36,15 @@ export default function Articles() {
     });
   }, []);
 
+  if (error) {
+    console.log(error.err);
+    return <ErrorPage message={error.err.response.data.msg} />;
+  }
+
   return (
     <>
       <div className="topics">
-        <form action={"/"}>
+        <form action={"/articles"}>
           <div>
             <label>select topic:</label>
             <select name="topic" id="topic">
