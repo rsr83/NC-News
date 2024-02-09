@@ -3,6 +3,7 @@ import CommentCard from "./CommentCard";
 import fetchCommentsByArticleID from "./Utils/fetchCommentsByArticleID";
 import ArticleVote from "./ArticleVote";
 import CommentAdder from "./CommentAdder";
+import ErrorPage from "./ErrorPage";
 
 export default function SingleArticleCard({ singleArticle }) {
   const {
@@ -15,7 +16,7 @@ export default function SingleArticleCard({ singleArticle }) {
     votes,
     body,
   } = singleArticle;
-
+  const [error, setError] = useState(null);
   const [commentsList, setCommentsList] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [votesActual, setVotesActual] = useState(votes);
@@ -23,11 +24,19 @@ export default function SingleArticleCard({ singleArticle }) {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchCommentsByArticleID(article_id).then((comments) => {
-      setCommentsList(comments);
-      setIsLoading(false);
-    });
+    fetchCommentsByArticleID(article_id)
+      .then((comments) => {
+        setCommentsList(comments);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError({ err });
+      });
   }, [article_id]);
+
+  if (error) {
+    return <ErrorPage message={error.err.response.data.msg} />;
+  }
 
   return (
     <>

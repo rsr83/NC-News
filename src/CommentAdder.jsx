@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import postCommentByArticleID from "./Utils/postCommentByArticleID";
+import ErrorPage from "./ErrorPage";
 
 export default function CommentAdder({ article_id }) {
   const [commentBody, setCommentBody] = useState({
@@ -11,6 +12,7 @@ export default function CommentAdder({ article_id }) {
     body: "",
   });
   const [newComment, setNewComment] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleFormChange = (event) => {
     event.preventDefault();
@@ -32,15 +34,23 @@ export default function CommentAdder({ article_id }) {
 
   useEffect(() => {
     if (finalCommentBody.body !== "") {
-      postCommentByArticleID(article_id, commentBody).then((response) => {
-        setFinalCommentBody({
-          username: "",
-          body: "",
+      postCommentByArticleID(article_id, commentBody)
+        .then((response) => {
+          setFinalCommentBody({
+            username: "",
+            body: "",
+          });
+          setNewComment(true);
+        })
+        .catch((err) => {
+          setError({ err });
         });
-        setNewComment(true);
-      });
     }
   }, [finalCommentBody]);
+
+  if (error) {
+    return <ErrorPage message={error.err.response.data.msg} />;
+  }
 
   if (newComment === false) {
     return (

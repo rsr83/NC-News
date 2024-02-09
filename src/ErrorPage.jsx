@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
-export default function Header() {
+
+export default function ErrorPage({ message }) {
+  console.log(message);
   return (
     <>
-      <h1>NC NEWS</h1>
+      <h2>ERROR: {message}</h2>
       <Link to={`/`}>
         <h3>Home</h3>
-      </Link>
-      <Link to={`/articles`}>
-        <h3>Articles</h3>
       </Link>
     </>
   );
